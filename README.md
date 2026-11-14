@@ -9,6 +9,7 @@
 ![Tokio](https://img.shields.io/badge/Tokio-async-6f42c1)
 ![Solana](https://img.shields.io/badge/Solana-devnet-14F195?logo=solana&logoColor=black)
 ![Nivel](https://img.shields.io/badge/nivel-intermedio-yellow)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 </div>
 
@@ -198,6 +199,12 @@ Es JavaScript puro con módulos ES (sin build) y está en `web/`.
 ¿Encontraste un requisito ambiguo, un error en un caso de uso o se te ocurre un módulo nuevo (KYC, portafolio, notificaciones…)? Abre un issue o un PR.
 
 **Las soluciones no van en este repo.** Si quieres compartir la tuya, enlaza tu fork en un issue para que otros puedan comparar enfoques.
+
+---
+
+## 📄 Licencia
+
+[MIT](LICENSE): úsalo, modifícalo y compártelo libremente, incluso en tus cursos o talleres, manteniendo el aviso de copyright.
 
 ---
 

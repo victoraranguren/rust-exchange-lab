@@ -2,6 +2,7 @@
 name = "cex-spot-trading"
 edition.workspace = true
 version.workspace = true
+license.workspace = true
 
 [dependencies]
 
