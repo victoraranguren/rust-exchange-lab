@@ -1,7 +1,7 @@
 # server: el binario de TuyCEX
 
 ## Qué es
-El **único ejecutable** del backend. No tiene lógica de negocio: arranca la configuración, la DB y Axum, y **compone** los routers y workers que exporta cada crate de `crates/`. Es el equivalente al `AppModule` + `main.ts` de NestJS.
+El **único ejecutable** del backend. No tiene lógica de negocio: arranca la configuración, la DB y Axum, y **compone** los routers y workers que exporta cada crate de `crates/`.
 
 ## Requisitos (los vas sumando a medida que avanzas en los proyectos)
 - **RF1** Cargar la configuración desde el entorno (`.env` en desarrollo) y fallar al arrancar si falta algo.

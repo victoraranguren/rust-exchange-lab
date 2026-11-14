@@ -35,7 +35,7 @@ flowchart LR
 ### ¿Para quién es?
 
 - Para quien ya sabe lo básico de Rust (ownership, structs, enums, `Result`) y quiere **dar el salto a backend de verdad**.
-- Para devs de Node/NestJS/Go que quieren aprender Rust con **problemas reales** en lugar de ejercicios sueltos.
+- Para devs backend que vienen de otros lenguajes y quieren aprender Rust con **problemas reales** en lugar de ejercicios sueltos.
 - Para builders de Solana que dominan Anchor pero quieren entender **el lado off-chain**: indexadores, watchers, ledgers y APIs.
 
 ### Qué vas a aprender
@@ -98,15 +98,15 @@ rust-exchange-lab/
 └── README.md
 ```
 
-**¿Vienes de NestJS o Next.js?** Piénsalo así:
+**¿Cómo se organiza?**
 
-| NestJS / Nx | Este repo |
-|-------------|-----------|
-| Monorepo de Nx/Turborepo | Cargo workspace |
-| `AppModule` + `main.ts` | `apps/server` |
-| Un módulo (`UsersModule`) | Un crate en `crates/` (cada uno con su propio `src/`) |
-| `exports` del módulo | lo que el crate marca como `pub` en su `lib.rs` |
-| `imports` del módulo | `[dependencies]` en su `Cargo.toml` |
+| Concepto | En este repo |
+|----------|--------------|
+| Monorepo | Cargo workspace (`Cargo.toml` raíz con `members`) |
+| Punto de entrada | `apps/server` (el único binario) |
+| Un dominio del negocio | Un crate en `crates/` (cada uno con su propio `src/`) |
+| API pública del dominio | lo que el crate marca como `pub` en su `lib.rs` |
+| Dependencias entre dominios | `[dependencies]` en su `Cargo.toml` |
 
 La gran ventaja: **el compilador hace cumplir las fronteras**. Si `cex-deposits` no declara `cex-core` como dependencia, no puede tocarlo.
 
