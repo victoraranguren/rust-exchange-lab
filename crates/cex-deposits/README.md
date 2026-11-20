@@ -1,4 +1,4 @@
-# 03 · cex-deposits
+# 02 · cex-deposits
 
 ## Qué construyes
 El **servicio de depósitos de TuyCEX**: cada usuario tiene su dirección de depósito en Solana; el servicio detecta lo que llega on-chain y lo acredita en el ledger de `cex-core`.
@@ -22,25 +22,23 @@ Estados: `detected → finalized → credited`, o `detected → failed`.
 | Método | Ruta | Descripción |
 |--------|------|-------------|
 | `POST` | `/users/{id}/deposit-address` | crear u obtener la dirección del usuario |
+| `POST` | `/deposits/sync` | sincronizar depósitos bajo demanda desde el cursor |
 | `GET` | `/users/{id}/deposits` | historial de depósitos con su estado |
 | `GET` | `/deposits/{signature}` | detalle de un depósito |
 | `GET` | `/health` | lag: slot actual − último slot procesado |
 
 ## Requisitos
-- **RF1** Detección por polling de `getSignaturesForAddress` desde el cursor y luego `getTransaction` para extraer el monto (SOL por pre/post balances; USDC por pre/post token balances).
+- **RF1** Sincronización bajo demanda (al invocar la función o `POST /deposits/sync`): consultar `getSignaturesForAddress` desde el cursor y luego `getTransaction` para extraer el monto (SOL por pre/post balances; USDC por pre/post token balances).
 - **RF2** Acreditar en el ledger (mismo esquema de `cex-core`) con `reference = signature`.
 - **RF3** Una tx fallida (`meta.err != null`) queda en `failed` y no acredita.
-- **RF4** Al reiniciar, retomar desde `sync_cursors` sin perder ni duplicar.
-- **RF5** Un monto menor al mínimo configurado (`MIN_DEPOSIT`) queda en `ignored`.
+- **RF4** Un monto menor al mínimo configurado (`MIN_DEPOSIT`) queda en `ignored`.
 - **RNF1** Pipeline de tasks: `detector → confirmer → crediter`, conectadas por canales acotados.
 - **RNF2** `Ctrl+C`: dejar de detectar, drenar lo que está en vuelo y salir.
 - **RNF3** Pasar a `credited` y acreditar el balance en la misma transacción SQL.
-- **Bonus** Detección en tiempo real por WebSocket (`logsSubscribe`) con fallback a polling.
 
 ## Criterios de aceptación
 - [ ] End-to-end en un validador local o devnet: enviar 2 SOL a la dirección → `credited` y +2 SOL en el balance
 - [ ] Procesar la misma firma dos veces → una sola acreditación
-- [ ] Matar el proceso a mitad y reiniciar → sin pérdidas ni duplicados
 - [ ] Una tx fallida queda en `failed`
 
 ## Conceptos a estudiar

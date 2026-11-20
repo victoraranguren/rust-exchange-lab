@@ -1,4 +1,4 @@
-# 04 · cex-withdrawals
+# 03 · cex-withdrawals
 
 ## Qué construyes
 El **servicio de retiros de TuyCEX**: el usuario pide retirar a su wallet, el sistema valida límites, bloquea fondos, firma desde la hot wallet, envía y confirma.

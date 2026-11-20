@@ -1,4 +1,4 @@
-# 05 · cex-spot-trading
+# 04 · cex-spot-trading
 
 ## Qué construyes
 El **trading spot de TuyCEX** para el par `SOL/USDC`: órdenes, matching engine en memoria, trades y liquidación en el ledger.

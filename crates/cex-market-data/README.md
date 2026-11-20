@@ -1,4 +1,6 @@
-# 06 · cex-market-data
+# 05 · cex-market-data *(por definir)*
+
+> ⚠️ **Estado: Por definir.** El alcance y diseño de este módulo están en revisión antes de implementarlo.
 
 ## Qué construyes
 El **servicio de datos de mercado de TuyCEX**: ticker, velas, trades recientes y orderbook en vivo, por REST y WebSocket.

@@ -1,11 +1,11 @@
-# 07 · dex-price-indexer
+# 06 · dex-price-indexer
 
 ## Qué construyes
 Un **indexador de precios on-chain**: lee las reservas de pools AMM en Solana, calcula los precios de los tokens, guarda el histórico y cotiza swaps. TuyCEX lo usa como precio de referencia.
 
 ## Features
 1. **Registrar pools** a indexar (address, DEX, fee).
-2. **Indexar reservas** cada 10 s con una sola llamada `getMultipleAccounts`.
+2. **Indexar reservas bajo demanda** (al invocar la función o `POST /pools/sync`) con una sola llamada `getMultipleAccounts`.
 3. **Precio por token** (spot + TWAP de 5 min) y su histórico.
 4. **Quote de swap**: el mejor pool para `amount_in`, con price impact y fee.
 
@@ -20,6 +20,7 @@ prices         (mint, quote_mint, price_num, price_den, slot, taken_at)
 | Método | Ruta | Descripción |
 |--------|------|-------------|
 | `POST` | `/pools` | registrar un pool |
+| `POST` | `/pools/sync` | sincronizar reservas de los pools bajo demanda |
 | `GET` | `/prices/{mint}` | precio spot y TWAP 5m en USDC |
 | `GET` | `/prices/{mint}/history?interval=1m` | histórico |
 | `GET` | `/quote?in=SOL&out=USDC&amount=10` | mejor pool, `amount_out`, impact, fee |

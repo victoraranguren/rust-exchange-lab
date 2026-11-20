@@ -17,19 +17,18 @@
 
 ## ¿Qué es esto?
 
-Un **laboratorio de práctica guiada**. No es un tutorial con el código resuelto: es una serie de **7 sistemas reales**, cada uno con su caso de uso, sus tablas de base de datos, sus endpoints, sus requisitos y sus criterios de aceptación. **Tú escribes todo el código.**
+Un **laboratorio de práctica guiada**. No es un tutorial con el código resuelto: es una serie de **6 sistemas reales**, cada uno con su caso de uso, sus tablas de base de datos, sus endpoints, sus requisitos y sus criterios de aceptación. **Tú escribes todo el código.**
 
 Juntos forman el backend de **TuyCEX**, un exchange centralizado ficticio sobre Solana:
 
 ```mermaid
 flowchart LR
-    IDX[01 Token balance indexer]
-    CORE[02 CEX core<br/>usuarios + ledger]
-    DEP[03 Depósitos] --> CORE
-    WD[04 Retiros] --> CORE
-    SPOT[05 Spot trading] --> CORE
-    SPOT --> MD[06 Market data]
-    PX[07 DEX price indexer] -.precio de referencia.-> SPOT
+    CORE[01 CEX core<br/>usuarios + ledger]
+    DEP[02 Depósitos] --> CORE
+    WD[03 Retiros] --> CORE
+    SPOT[04 Spot trading] --> CORE
+    SPOT --> MD["05 Market data (por definir)"]
+    PX[06 DEX price indexer] -.precio de referencia.-> SPOT
 ```
 
 ### ¿Para quién es?
@@ -55,15 +54,14 @@ flowchart LR
 
 | # | Módulo | Qué construyes | Rust que practicas | Tiempo |
 |---|--------|----------------|--------------------|--------|
-| 01 | [token-balance-indexer](crates/token-balance-indexer) | Indexa balances de SOL/SPL de wallets → DB + API | Axum básico, SQLx, `reqwest` + serde, `interval`, newtypes | 1–2 sem |
-| 02 | [cex-core](crates/cex-core) | Usuarios, cuentas y **ledger de doble entrada** | `AppError`, extractors, transacciones SQL, concurrencia | 2 sem |
-| 03 | [cex-deposits](crates/cex-deposits) | Direcciones de depósito + watcher on-chain + acreditación | Tokio: tasks, canales, `select!`, shutdown, idempotencia | 2 sem |
-| 04 | [cex-withdrawals](crates/cex-withdrawals) | Retiros con límites, aprobación, firma y envío | typestate, firmar transacciones, reintentos | 1–2 sem |
-| 05 | [cex-spot-trading](crates/cex-spot-trading) | Órdenes + **matching engine** + liquidación | colecciones, actor pattern, `proptest`, `criterion` | 2 sem |
-| 06 | [cex-market-data](crates/cex-market-data) | Ticker, velas y orderbook en vivo por REST + WS | WebSockets, `broadcast`, middleware `tower` | 1 sem |
-| 07 | [dex-price-indexer](crates/dex-price-indexer) | Precios on-chain desde pools AMM + cotizador de swaps | bytes crudos, `u128`, traits, performance | 1–2 sem |
+| 01 | [cex-core](crates/cex-core) | Usuarios, cuentas y **ledger de doble entrada** | `AppError`, extractors, transacciones SQL, concurrencia | 2 sem |
+| 02 | [cex-deposits](crates/cex-deposits) | Direcciones de depósito + watcher on-chain + acreditación | Tokio: tasks, canales, `select!`, shutdown, idempotencia | 2 sem |
+| 03 | [cex-withdrawals](crates/cex-withdrawals) | Retiros con límites, aprobación, firma y envío | typestate, firmar transacciones, reintentos | 1–2 sem |
+| 04 | [cex-spot-trading](crates/cex-spot-trading) | Órdenes + **matching engine** + liquidación | colecciones, actor pattern, `proptest`, `criterion` | 2 sem |
+| 05 | [cex-market-data](crates/cex-market-data) *(por definir)* | Ticker, velas y orderbook en vivo por REST + WS | WebSockets, `broadcast`, middleware `tower` | 1 sem |
+| 06 | [dex-price-indexer](crates/dex-price-indexer) | Precios on-chain desde pools AMM + cotizador de swaps | bytes crudos, `u128`, traits, performance | 1–2 sem |
 
-> 💡 Hazlos en orden. Cada uno se apoya en lo que aprendiste en el anterior, y del 03 al 05 dependen de `cex-core`.
+> 💡 Hazlos en orden. Cada uno se apoya en lo que aprendiste en el anterior, y del 02 al 04 dependen de `cex-core`.
 
 ### ¿Qué trae el README de cada módulo?
 
@@ -87,7 +85,6 @@ rust-exchange-lab/
 │   └── server/             # el ÚNICO binario: config, DB, Axum, compone los módulos
 ├── crates/
 │   ├── shared/             # lo que usan 2+ módulos (Scope Rule)
-│   ├── token-balance-indexer/
 │   ├── cex-core/
 │   ├── cex-deposits/       # depende de cex-core
 │   ├── cex-withdrawals/    # depende de cex-core
@@ -125,10 +122,10 @@ cargo build
 # 3. Abre la web de estudio
 python3 -m http.server 4321    # → http://localhost:4321
 
-# 4. Lee crates/token-balance-indexer/README.md y empieza a codear 🦀
+# 4. Lee crates/cex-core/README.md y empieza a codear 🦀
 ```
 
-**Requisitos:** Rust estable (edition 2024), Docker (para Postgres desde el módulo 02) y la [CLI de Solana](https://solana.com/docs/intro/installation) para crear wallets de devnet.
+**Requisitos:** Rust estable (edition 2024), Docker (para Postgres desde el módulo 01) y la [CLI de Solana](https://solana.com/docs/intro/installation) para crear wallets de devnet.
 
 ### Comandos útiles
 
@@ -179,7 +176,7 @@ Es JavaScript puro con módulos ES (sin build) y está en `web/`.
 
 **Rust y backend**
 - *Zero To Production in Rust* (Luca Palmieri): la referencia para Axum + SQLx
-- *Rust for Rustaceans* (Jon Gjengset): a partir del módulo 03
+- *Rust for Rustaceans* (Jon Gjengset): a partir del módulo 02
 - *Designing Data-Intensive Applications* (Martin Kleppmann): el libro de system design
 - [Ejemplos de Axum](https://github.com/tokio-rs/axum/tree/main/examples) y el [tutorial de Tokio](https://tokio.rs/tokio/tutorial)
 

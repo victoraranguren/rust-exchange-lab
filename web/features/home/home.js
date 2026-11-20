@@ -50,7 +50,7 @@ export async function Home(el, { index }) {
       <p class="muted">${next.summary}</p>
       ${pending ? `<p class="next-item"><span class="tag">${escapeHtml(pending.section)}</span> ${escapeHtml(pending.text)}</p>` : '<p>Todo marcado. ¡Cámbialo a <b>Terminado</b>! 🎉</p>'}
       <a class="btn" href="#/p/${next.dir}">Continuar →</a>
-    </section>` : `<section class="card card--next"><h2>🎉 ¡Terminaste los 7 proyectos!</h2><p>Ahora toca volver al 01 y refactorizarlo con todo lo que sabes.</p></section>`}
+    </section>` : `<section class="card card--next"><h2>🎉 ¡Terminaste los 6 proyectos!</h2><p>Ahora toca volver al 01 y refactorizarlo con todo lo que sabes.</p></section>`}
 
     <section>
       <h2 class="section-title">Roadmap</h2>

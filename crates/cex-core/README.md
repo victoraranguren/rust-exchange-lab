@@ -1,4 +1,4 @@
-# 02 · cex-core
+# 01 · cex-core
 
 ## Qué construyes
 El **server + DB básica de TuyCEX**: usuarios, cuentas por asset y un **ledger de doble entrada** que es la única fuente de verdad del dinero.
@@ -39,7 +39,6 @@ journal_lines  (id, journal_id, account_id, amount)          -- amount con signo
 - **RNF1** Toda operación en una única transacción SQL.
 - **RNF2** Dos transferencias concurrentes desde la misma cuenta no pueden dejarla negativa.
 - **RNF3** Montos en enteros (`BIGINT` / `u64`), nunca `f64`.
-- **RNF4** `docker compose up` levanta Postgres; migraciones versionadas; logs con `tracing`.
 
 ## Criterios de aceptación
 - [ ] Endpoint o test de **reconciliación**: `Σ journal_lines` por cuenta = balance, y `Σ total` del sistema = 0
